@@ -1,0 +1,35 @@
+Day #14 - Setting up a load balancer configuration(NGINX):
+
+Lets setup a basic load balancer. We can use a load balancer irrespective of our architecture, monolothic or microservice.
+
+Nginx is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache.
+
+This is the exact defination used by NGINX on their docs.
+
+In simple words. Nginx is a web server. Now There are thousands of clients making millions of requests each day. For which we would require a ton of web servers. Proxy means working on behalf of others. So a web server which allows load balancing as well thus becomes a proxy. If it can work to and fro that is it can process both request and response from client and server, it becomes a reverse proxy. Also NGINX allows client side caching.
+
+Now we will limit our use of NGINX to load balancing as of now.
+
+This is the basic code of a load balancer config file:-
+
+http {
+    upstream myapp1 {
+        server srv1.example.com; ## server domains
+        server srv2.example.com;
+        server srv3.example.com;
+    }
+
+    server {
+        listen 8080;
+
+        location / {
+            proxy_pass http://myapp1;
+        }
+    }
+}
+
+This is telling NGINX that, hey, listen to port 8080, find the domain - http://myapp1(NGINX can gather the IP from the domain), check if it has any server linked to it? (upstream), now we find 3 servers linked to it, this will process the requests.
+
+As simple as that, our load balancer is ready, put server srv1.example.com weight=3;, and it will follow weighted round-robin.
+
+Go through this article now and you will be good to go - https://nginx.org/en/docs/http/load_balancing.html
