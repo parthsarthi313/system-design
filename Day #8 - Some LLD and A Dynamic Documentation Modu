@@ -1,0 +1,19 @@
+Day #8 - Some LLD and A Dynamic Documentation Module(hackathon project):
+
+There was no design principle that I learned today per se. I was busy with a hackathon.
+
+So we are building a dynamic documentation module, that is, you can create a flow hierarchy with a feature to write text, upload images and videos, and other file formats. This is something like Atlassian's Confluence—an in-house tool of that sort.
+
+Backend architecture involves the implementation of CRUD and some LLD features like Builder pattern, singleton pattern, and observer pattern. 
+
+Let's discuss these 3 LLD patterns,
+
+𝗕𝘂𝗶𝗹𝗱𝗲𝗿 𝗽𝗮𝘁𝘁𝗲𝗿𝗻: Most of the time the Object we deal with is complex, builder pattern allows building the object step by step, allowing complex logic to be embedded in the object creation(yes that cmd + N - > generate step builder)
+
+𝗦𝗶𝗻𝗴𝗹𝗲𝘁𝗼𝗻 𝗽𝗮𝘁𝘁𝗲𝗿𝗻: A component is reused upon a single instantiation. In spring boot, If you annotate any object let's say @Service or @Component, It automatically becomes singleton. Only 1 bean is created by Spring Boot for it and managed in the entire life-cycle. Even when you @Autowire those class, the rule follows.
+
+𝗢𝗯𝘀𝗲𝗿𝘃𝗲𝗿 𝗽𝗮𝘁𝘁𝗲𝗿𝗻: You create some entity and put some function on top of that, so whenever your entity changes, that function triggers. A classic example is the asynchronous event that we throw to send an email/Otp etc. An event and event listener follows an observer pattern.
+
+Happy weekend.
+
+Will continue with core HLD principles from tomorrow.

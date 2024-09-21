@@ -1,0 +1,33 @@
+Day #9 - 𝗜𝗻𝘁𝗿𝗼𝗱𝘂𝗰𝘁𝗶𝗼𝗻 𝘁𝗼 𝗛𝗟𝗗(𝗛𝗶𝗴𝗵 𝗟𝗲𝘃𝗲𝗹 𝗗𝗲𝘀𝗶𝗴𝗻):
+
+HLD is the overview of the overall architecture and design with which we create any new system.
+
+We think of these strategies before finalising how any new system would look like:
+-> Module: How the components and sub-system would look like.
+
+-> Data flow: How will the data flow take place, connecting the modules.
+
+-> Databases: How are we going to store our data and retrieve it.
+
+-> Tech stack: The tech stack, frameworks, libraries etc that we are going to incorporate.
+
+-> API's: How will the communication between different module take place using the API's.
+
+-> Non-Functional requirements: Performance, security, scalability etc.
+
+-> Deployment: Production setup and its requirements like downtime.
+
+Some key terminologies:
+-> Client-Server Model: client requests resources/services and server processes the request and returns results.
+-> Scalability: Ability to handle more load in near future.(should be maximised).
+-> Latency: Time delay between client's request and server's response. (should be minimised).
+-> Throughput: number of request a system can process per second (should be maximised, inversely proportional to latency.)
+-> Fault/Partition Tolerance: System continuation upon component failure.
+-> Load Balancing: Balancing requests accross multiple servers.
+-> Cache: Temporary storage of data of the most frequently accessed ones.
+-> Middleware: software in the middle of other software components, redirecting data communication.
+-> Message Queue: A queue that holds data messages and processes asynchronous calls.
+
+Each of the above terms are a topic in themselves which we will cover in later days.
+
+Happy Saturday. ✌

@@ -1,0 +1,39 @@
+Day #7 - 𝗖𝗔𝗣 𝗧𝗵𝗲𝗼𝗿𝗲𝗺(𝗧𝗵𝗲 𝗯𝗮𝗰𝗸𝗯𝗼𝗻𝗲 𝗼𝗳 𝗮𝗻𝘆 𝗱𝗶𝘀𝘁𝗿𝗶𝗯𝘂𝘁𝗲𝗱 𝘀𝘆𝘀𝘁𝗲𝗺) - 𝗣𝗮𝗿𝘁(2):
+
+Its already a week!!!
+
+Lets go through 5 examples to make sure we will always correctly prioritize the system:
+𝗕𝗮𝗻𝗸𝗶𝗻𝗴 𝗦𝘆𝘀𝘁𝗲𝗺 𝗖𝗣
+-> Atomic level transaction is very important to be consistent throughout.
+𝗘-𝗰𝗼𝗺𝗺𝗲𝗿𝗰𝗲 𝗪𝗲𝗯𝘀𝗶𝘁𝗲 (𝗙𝗹𝗮𝘀𝗵 𝗦𝗮𝗹𝗲) 𝗔𝗣
+-> Data availability is very important.
+𝗦𝗼𝗰𝗶𝗮𝗹 𝗠𝗲𝗱𝗶𝗮 𝗙𝗲𝗲𝗱 𝗔𝗣
+-> Data should be available at all times.
+𝗦𝘁𝗼𝗰𝗸 𝗧𝗿𝗮𝗱𝗶𝗻𝗴 𝗣𝗹𝗮𝘁𝗳𝗼𝗿𝗺 𝗖𝗣
+-> Atomic level transaction is very important to be consistent throughout.
+𝗖𝗼𝗻𝘁𝗲𝗻𝘁 𝗗𝗲𝗹𝗶𝘃𝗲𝗿𝘆 𝗡𝗲𝘁𝘄𝗼𝗿𝗸 (𝗖𝗗𝗡) 𝗔𝗣
+-> Video steaming service use this, explained on day 6
+𝗛𝗲𝗮𝗹𝘁𝗵𝗰𝗮𝗿𝗲 𝗦𝘆𝘀𝘁𝗲𝗺 𝗖𝗣
+-> Data consistency hold priority.
+
+Always remember distributed system will always have Partition tolerance, so our task becomes very easy.
+
+Implementations:
+
+𝗖𝗼𝗻𝘀𝗶𝘀𝘁𝗲𝗻𝗰𝘆:: 
+-> 𝑺𝒚𝒏𝒄𝒉𝒓𝒐𝒏𝒐𝒖𝒔 𝒄𝒂𝒍𝒍𝒔 - All nodes must be successfully updated for the transaction to commit, else rollback occurs and call fails.
+-> 2𝑷𝑪(2-𝒑𝒉𝒂𝒔𝒆 𝒑𝒓𝒐𝒕𝒐𝒄𝒐𝒍) - 2 phases occurs, "prepare" phase, where all nodes are available to commit, thus ensuring full transaction and "commit" phase, where we get the confirmation of write.
+
+There are some others as well, Need to research and learn more about them (Strong Quorum-based, Locks and Paxos/Raft Consensus).
+
+𝗔𝘃𝗮𝗶𝗹𝗮𝗯𝗶𝗹𝗶𝘁𝘆:: 
+-> 𝒂𝒔𝒚𝒏𝒄𝒉𝒓𝒐𝒏𝒐𝒖𝒔 𝒄𝒂𝒍𝒍𝒔 - notify the user of successful write for the current data node, for the rest, an asynchronous call goes to do the write via some event.
+-> 𝑺𝒉𝒂𝒓𝒅𝒊𝒏𝒈 𝒂𝒏𝒅 𝒓𝒆𝒑𝒍𝒊𝒄𝒂𝒕𝒊𝒐𝒏- Sharding means breaking the database into chunks and putting them on different nodes and replication is creating same database on another node. We can achieve high availability by combining the 2.
+
+𝗣𝗮𝗿𝘁𝗶𝘁𝗶𝗼𝗻 𝘁𝗼𝗹𝗲𝗿𝗮𝗻𝗰𝗲::
+-> 𝑹𝒆𝒑𝒍𝒊𝒄𝒂𝒕𝒊𝒐𝒏 - replicating the database, even if 1 node fails, we have a copy.
+-> 𝑭𝒂𝒖𝒍𝒕 𝒕𝒐𝒍𝒆𝒓𝒂𝒏𝒄𝒆 - use routing algorithms and retry mechanism to route read and write to the replicated nodes which are non faulty.
+
+Taking part in a hackathon for the weekend, Will share some learning from there, If I can.
+
+Godspeed! ✌

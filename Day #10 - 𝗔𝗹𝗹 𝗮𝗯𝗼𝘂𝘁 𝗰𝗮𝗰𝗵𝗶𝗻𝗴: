@@ -1,0 +1,41 @@
+Day #10 - 𝗔𝗹𝗹 𝗮𝗯𝗼𝘂𝘁 𝗰𝗮𝗰𝗵𝗶𝗻𝗴:
+
+Caching is like dynamic programming of system design. If there is frequent access to some data, instead of making the query to the database again and again, we store it in a key-value format, enabling O(1) fetch of the data.
+
+Cache hits - When the data we are looking for is found in the cache and retrieved quickly.
+Cache miss - When we dont find the desired data and make the call to DB/external API.
+
+Cache Eviction policies - Cache needs to be removed and updated time to time as not much storage is possible to assign to caching. Following are cache eviction policies:
+Least Recently Used (LRU)
+Lead Frequently Used (LFU)
+First In, First Out (FIFO)
+
+Distributed Cache - cache is distributed across multiple servers.
+
+In-memory cache - Data stored in RAM, as RAM is the fastest data retrieval storage.
+
+Most popular caches - Redis, Memcached, both are In-memory but can be configured to distributed.
+
+@Cacheable Annotation on method:-
+It indicates that the method is cacheable
+example - @Cacheable(value = "redis_cache", 
+ key = "hashtag#key", 
+ cacheManager = "cache_manager", 
+ unless = "hashtag#result == null")
+
+
+@Caching Annotation on method:-
+It allows multiple caching operations to be done on the method.
+example - @Caching(evict = {
+ @CacheEvict(value = "redis_cache", 
+ cacheManager = "cache_manager", 
+ allEntries = true)
+ })
+
+@CachePut(value = "productsCache", key = "#product.id"):- updates cache with the latest data
+
+some useful Redis commands(keep them in mind always):
+GET key (get the key)
+SET key = "value" (set key value)
+DEL key (delete the key)
+TTL key (time remaining for key before eviction)

@@ -1,0 +1,19 @@
+Day #5 - 𝗜𝗻𝘁𝗿𝗼𝗱𝘂𝗰𝘁𝗶𝗼𝗻 𝘁𝗼 𝗡𝗼𝗦𝗤𝗟:
+
+I sent a "HI" text to my friend on a messaging app. It took lets say 2 sec to reach his chat. Will this ever cause any problem for the 2 users?
+
+Mostly the answer to this question would be NO! And what about tens of thousands of messages that we share with each other. Will a MySQL database be able to hold this much traffic?
+
+Thats where a NoSQL database comes into the picture. MySQL is strongly consistent that is, as soon as the write operation is commited, you can read the data. while NoSQL is eventually consistent that is, data in some nodes might be different as soon as the write happens.
+
+𝙉𝙤𝙩𝙚:- The points I am writing just generalises the bigger picture.
+
+-> There is something called a system where your database resides. You can have 1 big system with eveything in it(lets say a building with 100 floors) or you can distribute your system to have multiple database nodes(lets say 10 buildings with 10 floors). If you keep on building floors on the same building its called vertical scaling and if you start making new building as soon as your threshold reaches, this is called horizontal scaling.
+
+-> vertical scaling provides fast, consistent data and easy maintainability but is very tightly coupled and is interdependent on each other in many aspects(just think of the building eg. everytime). This is the perfect use case for a SQL database where we structure our data in schema and provide relationships. But there is a limit to which you can add floor to your building such is the limitation of a system. Also you can not design new floor size as you have to make a floor on top of the previous. Thus pre-built schema is rigid and tedious to change. if 3rd floor collapses the whole building collapses, same is the case with the data node, everything is coupled.
+
+-> horizontal scaling(perfect use case for NoSQL) causes increased throughput(you can have a machine write heavy and another machine read heavy, whenever read query comes, use the read machine and whenever write comes update it in the read machine asynchronously(eventually consistency!!!!)). This causes high availability, huge chunks of data will be available quickly(CAP THEOREM). whole new world of CDN opens up.(Read how any streaming service provides such great content so quickly.). Highly scalable, as the data is independent of the other node. we can do parallel processing.
+
+You must know the basic usage of every DB. Then whenever you are building something, you have to think what will fit your use case, small system with 1000 entries use MySQL, millions of entries with full text search required, use Elastic Search(not a traditional database though.) Heavy horizontal scaling is required, use Cassandra and so on. You have to read all the major ones atleast. Will try and cover the major ones when I finish up with the basics of HLD.
+
+Day #6(tomorrow) - 𝑪𝑨𝑷 𝑻𝒉𝒆𝒐𝒓𝒆𝒎

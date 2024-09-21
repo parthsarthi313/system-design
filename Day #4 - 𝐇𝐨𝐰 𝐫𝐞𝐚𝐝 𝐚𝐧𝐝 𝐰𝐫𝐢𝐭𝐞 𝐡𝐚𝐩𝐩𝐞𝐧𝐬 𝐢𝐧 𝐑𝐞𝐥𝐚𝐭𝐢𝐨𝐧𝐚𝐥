@@ -1,0 +1,44 @@
+Day #4 - 𝐇𝐨𝐰 𝐫𝐞𝐚𝐝 𝐚𝐧𝐝 𝐰𝐫𝐢𝐭𝐞 𝐡𝐚𝐩𝐩𝐞𝐧𝐬 𝐢𝐧 𝐑𝐞𝐥𝐚𝐭𝐢𝐨𝐧𝐚𝐥 𝐝𝐚𝐭𝐚𝐛𝐚𝐬𝐞𝐬(𝐚 𝐜𝐚𝐬𝐞 𝐬𝐭𝐮𝐝𝐲 𝐨𝐧 𝐁+ 𝐭𝐫𝐞𝐞𝐬):
+Efficient read and write in relational databases occur using B+ trees. Lets go through B+ trees in very short.
+
+B+ trees are advanced balancing m-ary tree with left node < root node and right node > root node(consider it a self balancing BST(AVL tree) but with m children). It holds 2 key info in a node:-
+1) pointer to nodes
+2) value of the node
+
+pointer holds the address of the child nodes(for a non leaf node) and address to the neighouring node(for a leaf node). This allows downward traversal in non-leaf nodes and sideways traversal in leaf nodes facilitating range queries. look at the image below and the structure will be crystal clear.
+
+Now lets see how it increases the efficiency of the CRUD operations:-
+
+lets say we run:-
+select * from employee where id = "1000";
+
+Now lazy fetch would process like, we would go through each and every row and check the where clause. This will take O(n) OR linear time complexity and reduces efficiency a lot.
+
+what would happen if we use:-
+𝑪𝑹𝑬𝑨𝑻𝑬 𝑰𝑵𝑫𝑬𝑿 𝒊𝒅𝒙_𝒊𝒅 𝒐𝒏 𝒆𝒎𝒑𝒍𝒐𝒚𝒆𝒆(𝒊𝒅);(𝒐𝒏 𝑴𝒚𝑺𝑸𝑳)
+
+OR
+
+@𝑻𝒂𝒃𝒍𝒆(𝒏𝒂𝒎𝒆 = "𝒆𝒎𝒑𝒍𝒐𝒚𝒆𝒆", 𝒊𝒏𝒅𝒆𝒙𝒆𝒔 = {@𝑰𝒏𝒅𝒆𝒙(𝒏𝒂𝒎𝒆 = "𝒊𝒅𝒙_𝒊𝒅", 𝒄𝒐𝒍𝒖𝒎𝒏𝑳𝒊𝒔𝒕 = "𝒊𝒅")}) (𝒂𝒏𝒏𝒐𝒕𝒂𝒕𝒊𝒐𝒏 𝒐𝒏 𝒕𝒐𝒑 𝒐𝒇 𝑬𝒎𝒑𝒍𝒐𝒚𝒆𝒆 𝒅𝒐𝒎𝒂𝒊𝒏)
+
+This would create a B+ tree element. Now as soon as any new element is added, it gets added in the leaf of the B+ tree, tree is balanced and upward propagation takes place(this is a standard algorithm of self balancing upon element insertion).
+
+Now our job is done.
+
+Now its just data structures and algorithms (a practical example for the people who ask where do I use data structure and algorithm in dev. 😜 )
+
+CRUD operations happens in 𝒍𝒐𝒈(𝒏) and our efficiency is increased. Very efficient for Range queries.
+
+Question -> If this approach is so good with CRUD, then why NoSQL databases are required? Why cant we use this for searching instead of a NoSQL database like elastic search?
+
+Lets get the answer tomorrow.
+
+𝗡𝗼𝘁𝗲 :- B- Trees are used for single indexing while B+ trees are used for composite indexing.
+
+Day #5(tomorrow) - 𝗜𝗻𝘁𝗿𝗼𝗱𝘂𝗰𝘁𝗶𝗼𝗻 𝘁𝗼 𝗡𝗼𝗦𝗤𝗟
+
+Some good references for detail reading:-
+
+𝑪𝑹𝑼𝑫 𝒐𝒏 𝑩-𝒕𝒓𝒆𝒆𝒔 - https://lnkd.in/gyEm358X
+
+𝑪𝒐𝒎𝒑𝒐𝒔𝒊𝒕𝒆 𝑰𝒏𝒅𝒆𝒙𝒊𝒏𝒈 𝒊𝒏 𝑴𝒚𝑺𝑸𝑳 - https://lnkd.in/gXxjqsZD

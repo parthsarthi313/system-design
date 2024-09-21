@@ -1,0 +1,21 @@
+Day #13 - 𝗟𝗼𝗮𝗱 𝗕𝗮𝗹𝗮𝗻𝗰𝗲𝗿𝘀 𝗮𝗻𝗱 𝗯𝗮𝗹𝗮𝗻𝗰𝗶𝗻𝗴 𝗹𝗲𝗮𝗱𝗲𝗿𝘀:
+
+I had some family emergency due to which i missed the previous few day, will post for each day today.
+
+Load balancing is a simple concept where we move the traffic requests to multiple servers, so that a single server does not get overwhelmed by all the requests and there is no single point of failure.
+
+Its working is simple. A request in the form of HTTP comes to the load balancer, It checks which all API servers are healthy, sends them the request following these algorithms:-
+1) un-weighted round robin - sends 1 request to each API server.
+2) weighted round robin - sends request proportionate to the weight/disk capacity of a server. Example - a server with space n and a server with space 2n gets n and 2n requests respectively.
+3) Lowest connections active - sends request to the server having the least load currently.
+4) hashing and session persistance - Hash the client's IP allowing the request redirection to a specific server always. This is called 𝒔𝒕𝒊𝒄𝒌𝒚 𝒔𝒆𝒔𝒔𝒊𝒐𝒏 and causes rigid coupling.
+
+So I had faced the 4th point problem. On the local machine, there was no load balancer and I used the API request of one server to another, since the codebase was same(a major flaw of using load balancers in a monolithic architecture.), This problem went unnoticed and on the production the load balancer(NGINX) was redirecting the request to the wrong server which caused major outage.
+
+Most famous example of a software based load balancer is 𝐍𝐆𝐈𝐍𝐗.
+
+There is something knows as the balancing/orchestrating leader which is one of the server itself and whose job is to overlook on other servers as well. If the leader itself goes down, There are internal algorithms with which a new leader is selected.
+
+Next session, lets boot up a load balancer configuration.
+
+a simple image showing the role of load balancer 👇

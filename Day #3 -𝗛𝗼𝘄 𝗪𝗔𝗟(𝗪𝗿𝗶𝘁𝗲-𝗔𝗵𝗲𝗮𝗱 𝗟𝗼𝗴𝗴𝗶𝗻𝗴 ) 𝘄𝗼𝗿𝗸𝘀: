@@ -1,0 +1,27 @@
+Day #3 -𝗛𝗼𝘄 𝗪𝗔𝗟(𝗪𝗿𝗶𝘁𝗲-𝗔𝗵𝗲𝗮𝗱 𝗟𝗼𝗴𝗴𝗶𝗻𝗴 ) 𝘄𝗼𝗿𝗸𝘀:
+
+In simple words, It is some file(log file) in which we write all our update queries with some reference pointer and then run them in sync on the database. This ensures durability and atomicity. If the disk crashes then also we have the data with us. This is the power given by WAL. 
+
+Note:- WAL has 𝙡𝙤𝙜𝙞𝙘𝙖𝙡 𝙙𝙖𝙩𝙖 𝙖𝙙𝙙𝙧𝙚𝙨𝙨 to track the current status of the transaction, so that even if the logs fails, there is a reference to which the queries have been run.
+
+This also provides the power to get a data snapshot at any particular point of time. 𝗟𝗼𝗴 𝗦𝗲𝗾𝘂𝗲𝗻𝗰𝗲 𝗡𝘂𝗺𝗯𝗲𝗿(𝗟𝗦𝗡) keeps track of the sequence of changes.
+
+Here is a simple example:-
+
+𝑺𝑻𝑨𝑹𝑻 𝑻𝑹𝑨𝑵𝑺𝑨𝑪𝑻𝑰𝑶𝑵;
+UPDATE employees SET salary = 50000 WHERE id = "1";
+
+snapshot in WAL:-
+LSN: 10000001
+Page Number: 12345
+Offset: 500
+Old Data: 40000
+New Data: 50000
+
+𝑪𝑶𝑴𝑴𝑰𝑻; (WAL data is flushed)
+
+Note:- Database engines have inner implementation of WAL(eg. innoDB of MySQL) and as a dev, we dont have to do anything, though we can implement it from our side as well but, it would be an overkill.
+
+A nice video to understand WAL in more detail by Arpit Bhayani - https://lnkd.in/gXTvUwbr
+
+An example implementation of WAL in java - https://lnkd.in/g8qF488G

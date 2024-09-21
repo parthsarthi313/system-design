@@ -1,0 +1,32 @@
+DAY #6 - 𝗖𝗔𝗣 𝗧𝗵𝗲𝗼𝗿𝗲𝗺(𝗧𝗵𝗲 𝗯𝗮𝗰𝗸𝗯𝗼𝗻𝗲 𝗼𝗳 𝗮𝗻𝘆 𝗱𝗶𝘀𝘁𝗿𝗶𝗯𝘂𝘁𝗲𝗱 𝘀𝘆𝘀𝘁𝗲𝗺) - 𝗣𝗮𝗿𝘁(𝟭):
+Breaking the working of CAP theorem into 2 parts. Will cover the basics in this part and examples and implementations in the 2nd part.
+
+So this is the abc of any distributed system.
+
+lets break down "CAP":
+
+𝑪𝒐𝒏𝒔𝒊𝒔𝒕𝒆𝒏𝒄𝒚 -> Every read gets the most recent write. as simple as that. As soon as any update query hits and the data is being read.(Do not confuse it with the transaction isolation, everything we are talking here is after commit).
+
+simple eg - you paid 200 Rs to your friend, that 200 Rs will get updated in his bank acc and will reflect all around consistently. So any updates which is of transaction in nature will have strong consistency.
+
+𝑨𝒗𝒂𝒊𝒍𝒂𝒃𝒊𝒍𝒊𝒕𝒚 -> Every read should get a response, It may not have the most recent write. That is, just after write, it is possible that some data nodes hold different info for some time, because the call goes asynchronously.
+
+simple eg - You are viewing a a movie on Netflix. The data availability plays the most important role here, a microsecond data loss holds no issue here.
+
+𝑵𝒐𝒕𝒆 - if the data is something which holds a lot of transactional importance, it needs to be consistent. On the other hand, if the data needs to be there all the time, though eventually consistent gives availability the priority.
+
+Partition Tolerance - Every distributed system has some nodes, now it is possible that some data node fails, in such scenarios, will the system continue to operate? This is measured in partition tolerance.
+
+𝗖𝗔𝗣 𝘁𝗵𝗲𝗼𝗿𝗲𝗺 𝘀𝘁𝗮𝘁𝗲𝘀, 𝘆𝗼𝘂 𝗰𝗮𝗻 𝗼𝗻𝗹𝘆 𝗵𝗮𝘃𝗲 𝟮 𝗼𝗳 𝗮𝗹𝗹 𝘁𝗵𝗲 𝗽𝗼𝘀𝘀𝗶𝗯𝗹𝗲 𝗰𝗼𝗺𝗯𝗶𝗻𝗮𝘁𝗶𝗼𝗻𝘀 𝗼𝗳 '𝗖','𝗔' 𝗮𝗻𝗱 '𝗣':
+
+𝑪 𝒂𝒏𝒅 𝑨 𝒃𝒖𝒕 𝒏𝒐𝒕 𝑷 (𝒏𝒐𝒕 𝒅𝒊𝒔𝒕𝒓𝒊𝒃𝒖𝒕𝒆𝒅)-> A single node server running a relational database with vertical scaling. Gives consistency, Availability but 0 partition tolerance. The system will fail if the node breaks.
+
+𝘾 𝘼𝙉𝘿 𝙋 𝙗𝙪𝙩 𝙣𝙤𝙩 𝘼 -> Remember NoSQL databases that can have high consistency, Those system fall in this category, you can have a distibuted system here, But the availability is compromised. Classic example - MongoDB.
+
+𝑨 𝑨𝑵𝑫 𝑷 𝒃𝒖𝒕 𝒏𝒐𝒕 𝑪 (𝒎𝒂𝒋𝒐𝒓𝒊𝒕𝒚 𝒐𝒇 𝑵𝒐𝑺𝑸𝑳 𝑫𝑩'𝒔) -> Highly distributed systems serving huge number of data per second. Data availability with network failure tolerance is the main key here. Classic example - Cassandra.
+
+Again, you have to pick your use case and apply the strategy. Logic remains the same, always.
+
+Will try and cover some examples and implementations tomorrow.
+
+peace ✌

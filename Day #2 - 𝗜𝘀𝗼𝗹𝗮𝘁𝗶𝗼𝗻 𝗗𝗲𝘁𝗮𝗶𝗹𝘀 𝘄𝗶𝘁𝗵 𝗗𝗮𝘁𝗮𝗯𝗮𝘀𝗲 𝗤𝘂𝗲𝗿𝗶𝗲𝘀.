@@ -1,0 +1,49 @@
+Day #2 - 𝗜𝘀𝗼𝗹𝗮𝘁𝗶𝗼𝗻 𝗗𝗲𝘁𝗮𝗶𝗹𝘀 𝘄𝗶𝘁𝗵 𝗗𝗮𝘁𝗮𝗯𝗮𝘀𝗲 𝗤𝘂𝗲𝗿𝗶𝗲𝘀.
+
+𝐈𝐬𝐨𝐥𝐚𝐭𝐢𝐨𝐧: Each transaction that occurs in a database isolates itself from other transactions. Ever wondered what would happen if you ran two transactions simultaneously on the same entity? For example, imagine one transaction makes some changes while the other transaction reads those changes, and just before committing, the first one rolls back.
+
+Let's find out:-
+
+Run these queries:-
+CREATE TABLE bankingTest (
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ amount DECIMAL(10, 2)
+);
+INSERT INTO bankingTest (amount) VALUES (100);
+
+select @@transaction_ISOLATION;
+
+ +-------------------------+
+| @@transaction_ISOLATION |
++-------------------------+
+| REPEATABLE-READ    |
++-------------------------+ 
+
+If you find a transaction level other than REPEATABLE-READ then run this:-
+𝐒𝐄𝐓 𝐒𝐄𝐒𝐒𝐈𝐎𝐍 𝐓𝐑𝐀𝐍𝐒𝐀𝐂𝐓𝐈𝐎𝐍 𝐈𝐒𝐎𝐋𝐀𝐓𝐈𝐎𝐍 𝐋𝐄𝐕𝐄𝐋 𝐑𝐄𝐏𝐄𝐀𝐓𝐀𝐁𝐋𝐄 𝐑𝐄𝐀𝐃;
+
+Note:- open 2 sessions, and run his command on both:- 
+START TRANSACTION;
+
+On one of the session run:-
+update bankingTest set amount = 300 where id = "1";
+
+Now check the values in both the transactions of the entry, next run COMMIT; and check both of them.
+
+You will one has a value 100 while the other has 300 even if one transaction commits. Now lets say if your API does the same, one updates the value and the other reads it simultaneously before 1st commits. This is an example of dirty-read. (Nishant Kumar , a problem that we encountered 😅 )
+
+There are 4 transaction_isolation present :-
+write 𝐬𝐞𝐥𝐞𝐜𝐭 @@𝐭𝐫𝐚𝐧𝐬𝐚𝐜𝐭𝐢𝐨𝐧_𝐈𝐒𝐎𝐋𝐀𝐓𝐈𝐎𝐍 to find out the transaction type of your DB.
+
+𝗥𝗲𝗽𝗲𝗮𝘁𝗮𝗯𝗹𝗲 𝗥𝗲𝗮𝗱: T1 completes its transaction, but T2 will continue to see the same data throughout its transaction. This can cause phantom reads.
+
+𝗥𝗲𝗮𝗱 𝗖𝗼𝗺𝗺𝗶𝘁𝘁𝗲𝗱: T2’s data will only change after T1 commits its transaction. This can cause non-repeatable reads.
+
+𝗥𝗲𝗮𝗱 𝗨𝗻𝗰𝗼𝗺𝗺𝗶𝘁𝘁𝗲𝗱: T2 sees the changes made by T1 even before T1 commits. This can cause dirty reads.
+
+𝗦𝗲𝗿𝗶𝗮𝗹𝗶𝘇𝗮𝗯𝗹𝗲: The strictest level—T2 must wait for T1 to commit before starting its transaction, which prevents all the above issues but may lead to decreased performance.
+
+use this to isolate your method updates:-
+@𝑻𝒓𝒂𝒏𝒔𝒂𝒄𝒕𝒊𝒐𝒏𝒂𝒍(𝒊𝒔𝒐𝒍𝒂𝒕𝒊𝒐𝒏 = 𝑰𝒔𝒐𝒍𝒂𝒕𝒊𝒐𝒏.𝑺𝑬𝑹𝑰𝑨𝑳𝑰𝒁𝑨𝑩𝑳𝑬)
+
+It's all a trade-off depending on the system and what isolation level to choose 🤝.

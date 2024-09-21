@@ -1,0 +1,36 @@
+Day #11 - 𝗔𝘀𝘆𝗻𝗰𝗵𝗿𝗼𝗻𝗼𝘂𝘀 𝗰𝗼𝗺𝗺𝘂𝗻𝗶𝗰𝗮𝘁𝗶𝗼𝗻 (𝗠𝗲𝘀𝘀𝗮𝗴𝗶𝗻𝗴 𝗤𝘂𝗲𝘂𝗲𝘀):
+
+Database saves are synchronous in nature, write/update happens and we get the data right after that.
+
+Asynchronous communication is a process where we do those logical operation which does not need to be done immediately.
+
+All the notification work is done asynchronously, sending email, notification, otp etc.
+
+We use message queue and message stream to achieve this, eg, activeMQ, rabbitMQ are messaging queues while Kafka is a messaging stream. There is a very subtle difference between the 2.
+
+All of these work on the producer consumer concept. Our logical operation also called the event is stored in queue format( First In First Out) in these MQ's. Then a producer prepares these events to be sent through a consumer. A consumer consumes an event, trigger its logical operation and notify the MQ.
+
+𝑴𝒆𝒔𝒔𝒂𝒈𝒊𝒏𝒈 𝒒𝒖𝒆𝒖𝒆𝒔(𝒍𝒊𝒌𝒆 𝒓𝒂𝒃𝒃𝒊𝒕𝑴𝑸) - All consumers are doing the same thing, just a distribution of work.
+
+𝑴𝒆𝒔𝒔𝒂𝒈𝒊𝒏𝒈 𝒔𝒕𝒓𝒆𝒂𝒎𝒔(𝒍𝒊𝒌𝒆 𝑲𝒂𝒇𝒌𝒂) - multiple consumers work here as well, but all performing different tasks, distribution of work along with parallelism.
+
+Messaging queues have their own software monitoring systems, we just need to embed it onto our system.
+
+You will have to create a producer function that will send the event with a kafka topic:
+ public void sendMessage(String message) {
+ kafkaTemplate.send("topic", message);
+ }
+
+You can use event and eventListener, this will ensure whenever an event is triggered, the listener calls the function.
+
+then write a consumer message:
+ @KafkaListener(topics = "topic", groupId = "groupId")
+ public void consumeMessage(String message) {
+ System.out.println("Consumed message: " + message);
+ }
+
+ When this is done, you producer consumer is set, and now you can write complex topics and embed it into your design and start doing parallel processing.
+
+Will cover some in-depth of messaging queues in coming days, as this topic needs much more depth.
+
+Godspeed. ✌
