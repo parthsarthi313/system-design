@@ -1,0 +1,41 @@
+Day #1 - 𝐀𝐂𝐈𝐃 𝐩𝐫𝐨𝐩𝐞𝐫𝐭𝐢𝐞𝐬 𝐢𝐧 𝐫𝐞𝐥𝐚𝐭𝐢𝐨𝐧𝐚𝐥 𝐃𝐚𝐭𝐚𝐛𝐚𝐬𝐞𝐬.
+
+𝙁𝙪𝙣 𝙁𝙖𝙘𝙩:- It is not true that all relational databases(MySQL, PostgreSQL etc.) follow only ACID while non relational databases(Cassandra, MongoDB etc.) follow BASE properties. It is possible to configure non relational databases to follow ACID properties as well. More details on CAP theorem day :).
+
+ACID (Atomicity, Consistency, Isolation, and Durability) in simple terms maintaining correct data across databases without loosing it, not considering how much time it will take(higher latency).
+
+Fundamentally broken into 4 terms:-
+𝑨𝒕𝒐𝒎𝒊𝒄𝒊𝒕𝒚:
+Each transaction is atomic, meaning it is treated as a single unit of work. It either fully completes or does not complete at all. This ensures that partial changes are not saved, preserving data integrity. Relational databases use a mechanism known as Write-Ahead Logging (WAL) to maintain atomicity. WAL logs all changes in a separate file before committing them. If a transaction needs to be rolled back, the original state of the data can be restored from these logs, ensuring the "all or nothing" behavior of transactions.
+
+In Spring Boot:
+Spring provides tools to ensure that applications maintain ACID properties at the code level, even though the database inherently supports them.
+
+example:-
+ @𝑻𝒓𝒂𝒏𝒔𝒂𝒄𝒕𝒊𝒐𝒏𝒂𝒍(𝒓𝒐𝒍𝒍𝒃𝒂𝒄𝒌𝑭𝒐𝒓 = 𝑬𝒙𝒄𝒆𝒑𝒕𝒊𝒐𝒏.𝒄𝒍𝒂𝒔𝒔)
+
+𝑪𝒐𝒏𝒔𝒊𝒔𝒕𝒆𝒏𝒄𝒚:
+The database always transitions from one consistent state to another after any transaction. Consistency is maintained through constraints such as unique keys, foreign keys, and check constraints. For instance, a row that violates a unique constraint cannot be added to the database.
+
+At the code level, Object-Relational Mapping (ORM) frameworks like JPA and Hibernate help maintain consistency by enforcing constraints and handling transactions appropriately.
+
+example:-
+𝐢𝐝 𝐯𝐚𝐫𝐜𝐡𝐚𝐫(𝟐𝟓𝟓) 𝐍𝐎𝐓 𝐍𝐔𝐋𝐋
+𝐔𝐍𝐈𝐐𝐔𝐄 𝐊𝐄𝐘 `𝐢𝐧𝐝𝐞𝐱_𝐢𝐝`
+
+In Spring Boot:-
+@𝐈𝐝
+@𝐍𝐨𝐭𝐍𝐮𝐥𝐥
+@𝐂𝐨𝐥𝐮𝐦𝐧(
+ 𝐧𝐮𝐥𝐥𝐚𝐛𝐥𝐞 = 𝐟𝐚𝐥𝐬𝐞
+)
+
+𝐍𝐨𝐭𝐞:- Taking Isolation as a separate topic for detailed discussion on the 2nd day. 😅 
+
+𝑫𝒖𝒓𝒂𝒃𝒊𝒍𝒊𝒕𝒚:
+Durability ensures that once a transaction is committed, the data will persist, even in case of system failures like crashes or power loss. Databases achieve durability using mechanisms such as Write-Ahead Logging (WAL) or similar strategies, which guarantee that once a transaction is completed, the changes are permanently saved to non-volatile storage. Even in the event of disk corruption, the database ensures that the committed data is recoverable through backups or replication strategies.
+
+Topics for the next days:-
+Day #2 - Isolation details with DB queries.
+Day #3 - How WAL(Write-Ahead Logging ) works
+Day #4 - How read and write happens in Relational databases(a case study on B+ trees)
