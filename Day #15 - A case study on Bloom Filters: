@@ -1,0 +1,29 @@
+Day #15 - A case study on Bloom Filters:
+
+Skipped web sockets for now, need to have a more deep dive in it.
+
+Bloom Filters are data structures which tells us that the element is not present with certainity. This means, with a result from bloom filters we can know 2 things.
+1) If result is 0 -> the element is not present in our database.(100%)
+2) If result if 1 -> the element may be present in our database.(may or may not be actually present).
+
+Thus it can have false positive cases. It is used to increase availability. When the data requires high availability with a space for false positives, bloom filters is our ally.
+
+Always finding a new match on tinder? always getting a new youtube short/insta reel? web crawlers not visiting the same url ? not seeing the same ad everytime?
+
+All have the answer -> bloom filters.
+
+Implementation: We can use redis for this. redis has redisBloom which is inbuilt bloom filter of redis.
+
+just open redis-cli and type:-
+
+BF.RESERVE {key} {error_rate} {capacity} [EXPANSION expansion] [NONSCALING]
+
+example - BF.RESERVE bikes:models 0.001 1000000
+
+capacity is the size of bits you are allocating for your filter. a bloom filter message is always hashed in to 0/1 and stored in a bit.
+
+example :-
+
+BF.ADD bikes:models "bike"
+
+and now lets say if you search, BF.EXISTS bikes:models "car" and you get 0, This means for sure that car does not exist.
