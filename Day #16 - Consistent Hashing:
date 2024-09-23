@@ -1,0 +1,28 @@
+Day #16 - Consistent Hashing:
+
+After we have distributed our requests through load-balancers and configuring the server nodes comes the most important question, how will load-balancers know which request needs to go to which server.
+
+This is where concept of hashing comes in. In general a load-balancer is a stateless quantity(does not store any data). As soon as any request comes in, It uses a hash function, like sha-128 or sha-256 and distributes the request to server nodes.
+
+The problem with this is if there are tons of servers, serving  millions of request, then each server must store multiple keys corresponding to any hashed entity. But if any server breaks down, or if we add a new server, then the re-distribution of keys becomes cumbursome.
+
+This is where we use consistent hashing. It is a concept in which we minimise the number of keys to be redistibuted using a simple implementation of binary search.
+
+It states that keep all the nodes in a ring, then all the empty spaces between would represent the requests which needs to be sent to the node to the very next node in clockwise direction.
+
+This way if a new node is added or any existing node is deleted then only the requests between those nodes needs to be redistributed.
+
+implementation:
+
+public String getNode(String key) {
+    if (ring.isEmpty()) {
+        return null;
+    }
+
+    int hash = hash(key); // hash function
+    SortedMap<Integer, String> tailMap = ring.tailMap(hash);
+    hash = tailMap.isEmpty() ? ring.firstKey() : tailMap.firstKey();
+    return ring.get(hash);
+}
+
+The above function will give you the node corresponding to the hashed key, rest is just adding and deletion from the sorted map.
