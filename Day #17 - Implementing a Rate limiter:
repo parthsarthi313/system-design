@@ -1,0 +1,29 @@
+Day #17 - Implementing a Rate limiter:
+
+The process of request and response is simple, a client sends a request lets say from web and the server responds with a response to the request. Now there are various techniques of sending a request, short polling, long polling, web sockets etc. We will cover this in coming days. But one thing which is required in every architecture is a rate limiter.
+
+Lets say you have a GET API which sends a request to the third party, retrieves the data, and sends back the response. Lets say, the third party charges Rs 10 per request sent. What if someone copies the curl from the web, and runs a script to throw that API thousands of times. This is a huge backdrop.
+
+A rate limiter limits the rate at which you can send a request call to the server.
+
+It also prevents overloading of the server. In the above case, we can use API rate limiter, to limit the call to the API itself or we can use Service Throttling to limit the use of the third party call.
+
+Implementation:
+
+There are various implementations to a rate limiter like we can use multithreading and concurrency concepts to retrieve a thread pool and check the count of requests made in a time frame.
+
+I am discussing another approach of using redis to hold the count of requests. This is called fixed window approach.
+
+create a redis class with these 2 fields:
+private final int totalRequests;
+private final int windowTime;
+
+get the windowTime by:
+long currentTimeMillis = Instant.now().toEpochMilli();
+long windowStartTime = currentTimeMillis - (timeWindowInSeconds * 1000);
+
+get the count of key in this time frame and compare it with the totalRequests, if it is less, allow access else deny.
+
+you can go through all the articles at ones here - https://github.com/parthsarthi313/system-design
+
+Will start implementing 1 design each week during weekend. Will start with URL shortner.
