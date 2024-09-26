@@ -1,0 +1,33 @@
+Day #18 - Client-Server Communication - part 1(Polling):
+
+The client-server communication allows the request to be sent from client and response to be generated from server, example the client being web browser(Frontend) and server being web server(Backend). This communication is facilitated over some network protocol like HTTP and HTTPS.
+
+There are various types of polling, lets just talk about short and long polling. Polling methods try to mimic the behavious of real-time communication, but for true real-time communication, we need web-sockets.
+
+In short polling, requests are sent at some fixed interval in the hope of change of data.
+
+JS example :-
+
+function getData () {
+	apiService.get('http://{some_url}')
+	.then(response => setResponseData(response))
+}
+
+setInterval(getData, 2000) // hit the api every 2 sec
+
+In long polling, requests are sent and is being waited at the client side till recieved from the server,usually your POST API's are involved in this behaviour.
+
+a classic example is the async await in JS code:-
+
+async function getData() {
+    try {
+        let response = await fetch('http://{some_url}');
+       
+        let data = await response.json();
+        
+        console.log('Received:', data);
+        await getData();
+       }
+}	
+
+Part-2 lets discuss web-sockets.
