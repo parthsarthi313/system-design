@@ -1,0 +1,22 @@
+Day #19 - Client-Server Communication - part 2(web-sockets):
+
+A handshake is something when 2 parties agress for communication over the web. TCP/IP uses 3 way handshake, HTTP uses 2 way handshake.
+
+Request -> Response -> connection ends (characterstic of a HTTPS request).
+
+But what if we want the connection to persist after a trigger, we dont want to call our friend again and again after 1 sentence each, Thats where web-sockets comes into the picture. Web-sockets enable a 2 way- persistent communication over the web in a real time manner.
+
+First request will be a HTTP request sent from the client, then the server responds with a connection accepted and response, But in this request, client also sends a request to upgrade the connection to a web-socket in the headers, if that is successfull, we recieve a 101 Switching Protocols as a response from the HTTP. Our web-socket connection is now ready. There is no need to send a request from the client side again and again, server itself will send the response when required.
+
+It is persistent because even after the first request, the connection still remains intact till closed from either client or server explicitly.
+
+The stock price tickers uses web-sockets. Any part of web architecture that required real-time peristent data communication uses web-sockets.
+
+Since the call is peristent and stateful, its disadvantages are quite simple, its prone to complexity, security concerns, heavy data transfer etc.
+
+Implementation:
+-> Implementation of web-sockets is a bit tedious in java,spring boot than in Node.js. writing the steps to incorporate the connection:
+1) Create a WebSocketConfig file implementing WebSocketConfigurer and a conenction to /ws
+2) Create a WebSocketHandler, this will facilitate the connection and call the service methods from this handler to subject the websockets to business logic.
+
+Go through this video for compelete tutorial - https://www.youtube.com/watch?v=QNMItUBPxaI
