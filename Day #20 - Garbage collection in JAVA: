@@ -1,0 +1,25 @@
+Day #20 - Garbage collection in JAVA:
+
+Now we have covered most of the HLD core concepts, we need to learn some techniques that indirectly affect our design, performance and security, be it, Concurrency locking, JWT tokens, garbage collection etc. I will try and cover most of these concepts.
+
+There are 2 memory spaces in Java, Stack and heap. Consider the function below. All the variables and objects are part of a scope in stack memory. Whenever this function is invoked, new objects are created in heap memory and these variables are pointing to it from the stack. Functionality of stack is LIFO. Each function has its own scope and cannot be accessed by other scope. Java does not have global declarations like C++, It uses the Static class variables in heap(metaspace) for global usage.
+
+public void function() {
+    String s1 = new String("");
+    Object obj1 = new Object();
+    Object obj2 = new Object();
+    obj1 = obj2;
+}
+
+After the function's execution is finished, We dont need the obj1,obj2 anymore, so stack space is cleared and JVM runs Garbage Collection over the heap space to remove those objects, which have no reference.
+
+JVM invokes GC whenever the heap size is filled a lot, and it runs automatically. So as a developer, we will not know when will GC be invoked. So these are the pointers to always keep in mind to optimise performance(more like best coding practises):
+
+1)Dont create redundant objects, use primitive type wherever possible(do not take space on heap), minimise the use of new keyword, specially for string, use string pooling, example :- String s = "";
+
+2)Avoid excessive sizing like new ArrayList<>(50000), use shared objects wherever possible.
+
+3) IMP:- We should always create new objects just before the logic of using it and not before hand. There is a concept of young generation and old generation heap, where these objects switch generations based on the number of times GC gets invoked and their TTL(Time To Live). Clearing heap in old generation is computaitionally heavy.
+
+Next topic - Concurrency locking.
+
