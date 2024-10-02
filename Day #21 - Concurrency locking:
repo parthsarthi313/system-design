@@ -1,0 +1,35 @@
+Day #21 - Concurrency locking:
+
+We have 2 people with the same screen, operating from 2 different devices, updating the same entity. This will lead to race condition.
+
+We discussed isolation level in our DB, Now usually when API's run concurrently, it is not possible to make the transaction isolation SERIALIZABLE everytime. Mostly We wont have SERIALIZATION altogether. It impacts our API performance. 
+
+There is a concept of locking. Same as to how an operating system uses shared resource, locking and concepts of deadlocks, InnoDB(MySQL engine) also uses this locking mechanism of the shared transaction.
+
+Locks are:-
+1) Shared lock - All the transactions can read only, no one can update.
+2) Exclusive lock - Only one transaction can write, others are blocked from read and write(same as crictical section.)
+
+All the concepts are similar here of the operating system and is handled by InnoDB internally.
+
+If this is a major problem in the system, there are 2 techniques to solve it at application side(API level):-
+
+1) Optmistic locking: When the race condition is rare.
+
+Add a field of verison in your domain entity:-
+
+	@Version
+	private int version; 
+
+and in the service of the API add the check:-
+
+	if (!account.getVersion().equals(accountDto.getVersion())) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Version conflict detected");
+    }
+
+2) Pessimistic locking: When the race conditions are frequent:-
+
+	just create a find by JPA query with pessimistic lock:
+	accountRepository.findWithPessimisticLock(accountId);
+
+Next up - JWT auth
