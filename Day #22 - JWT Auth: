@@ -1,0 +1,34 @@
+Day #22 - JWT Auth:
+
+You went to a fest and you got a pass to avail some free activities, lets discuss our concept in this context.
+
+Authentication - The proof of identity, The ID card that you will show when you enter the fest, in the same way, before entering any website, we provide an identity proof, example gmail login. These credentials will be sent to the server to validate whether that entity has the right to enter.
+
+Now the issue is, the above process works in a stateful manner, that is, it will make a DB call to authenticate your credentials, and we know I/O is expensive. Now if we want to access any part of the website, we need to authenticate again and again, which is redundant. That is why we create a token upon authentication which has encrypted ID details, Whenever you will access a part of the website, this token will be sent in the headers of the API. The token will be decrypted by the server providing you the access. Since no DB call is involved, this token mechanism is handeled at the application layer. And is thus stateless.
+
+This is called JSON Web-Token(JWT). The encypted(using some algorithm like HS256) token is public, but the decryption happens using a private key, that is available only at the server. just create a jwt token upon authentication:-
+
+	Jwt.builder()
+            .setClaims(claims)  // roles and permissions in claim
+            .setSubject(subject)  // unique identifier like username/userId
+            .setIssuedAt(new Date(System.currentTimeMillis()))  // time of issue
+            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))  // time of expiry
+            .signWith(SignatureAlgorithm.HS256, SECRET_KEY)  // encryption algorithm with the private key/secret key
+            .compact();  
+
+Now you have entered the fest and you want to claim those free activites, the owner asks you to show the pass.
+
+Authorisation - After we have authenticated and generated a JWT token, in the subsequent requests, we will pass this token. Server will decrypt the token using the private key, and see if that particular API is authorised for that token.
+
+To authorise the api, add the endpoint to skip spring security and add jwt in WebSecurityConfig:-
+
+protected void configure(HttpSecurity http) throws Exception {
+        http
+            .csrf().disable()  // Disable CSRF
+            .authorizeRequests()
+            .antMatchers("/api/user").hasAnyRole("USER", "ADMIN")  // Allow both USER and ADMIN roles
+            .antMatchers("/api/admin").hasRole("ADMIN")  // Restrict access to ADMIN role only
+            .anyRequest().authenticated()  // All other requests require authentication
+            .and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);  // Use stateless sessions (no session tracking)
+    }
