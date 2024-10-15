@@ -1,0 +1,30 @@
+Day #23 - Domain Name Server (DNS):
+
+A short break due to illness, we are back on track.
+
+www.google.com(url), after you type this in the browser, it takes the following journey:-
+
+url -> DNS resolver
+
+DNS resolver is some system with caching mechanism, if you have visited the url before, it must have been resolved and cached.
+
+DNS resolver -> root DNS servers
+
+If the url is not found in cache, we move to root DNS servers, it checks the root(.com, .org etc.) and funnels the request to respective TLD's
+
+root DNS -> Top Level Domain(TLD) servers
+
+The funneled url now enters the TLD, where there is a connection to authorative name servers, This is just for more accurate funneling.
+
+TLD -> Authorative Name Servers:-
+
+The authorative name servers holds the DNS records in the form of domain key and IP value, eg IPv4, IPv6 etc.
+
+After fetching the ip address, this is sent to the browser to establish a connection, Why are we using google.com instead of its ip? because we cant remember its IP, it is not humanly possible. Therefore we make a search with the name only.
+
+www -> subdomain(part of a website, it can be anyother subdomain also)
+google -> domain(The main name to which the ip is mapped in the DNS records)
+. -> root(helps to bifurcate between domain and TLD)
+com -> Top level domain(specifies the location, com-> commercial, in -> india), helps in redirecting the request to CDN's.
+(mostly, .com combined is referred to as TLD).
+

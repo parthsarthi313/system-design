@@ -1,0 +1,25 @@
+Day #24 - Content Delivery Network(CDN):
+
+When the data requirement demands high availability over consistency, usually of video streaming, it requires fast stream of data to load, If the data comes directly from the data center then it would be very slow. Thats where CDN's are used.
+
+CDN's are proxy servers kept at each geographical location. Data from the data centers are copied to these machines and cached.
+
+Request comes -> DNS resolver provides IP and root -> Load balancer sends request to closest CDN(edge server).
+
+If the CDN has the data cached, it provides the data to the request.
+
+If not, it retrieves the data from the data center using push/pull mechanism.
+
+Push CDN: Requires the data center to push the new data each time.
+
+Pull CDN: CDN makes the request/pulls the data from the data center.
+
+Famous CDN's - Cloudflare, Amazon cloudFront, Akamai etc.
+
+Benefits of a CDN:-
+1) High throughput and availability of data
+2) Fast loading
+3) Another layer of security
+4) Improves reliability, reduces downtime.
+
+Read through netflix's CDN - open conneect :- https://openconnect.netflix.com/en_gb/
