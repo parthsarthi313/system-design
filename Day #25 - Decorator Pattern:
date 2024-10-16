@@ -1,0 +1,48 @@
+Day #25 - Decorator Pattern:
+
+Lets discuss some LLD patterns which itself becomes design.
+
+We decorate a base class with all the new features and use it accordingly.
+
+famous design problems - coffee design, pizza design problems.
+
+Crux of this pattern will be:-
+1) An Abstract base class which will be extended by sub classes.
+2) Sub classes with unique features extending the parent class and adding desired property.
+
+This can be recurssively created depending upon the complexity of the design
+
+Lets discuss a simple example:-
+
+public abstract class Coffee{ ---> base class
+	private int cost;
+
+	public Coffee(int cost) {
+		this.cost = cost
+	}
+
+	public int cost () { ---> a cost method
+		return this.cost;
+	}
+}
+
+public abstract class SimpleCoffee extends Coffee{ --> Sub class extending base class
+	
+}
+
+public class MilkCoffee extends Coffee { ---> decorator on the base class(We can make a decorator on the sub class also)
+	private Coffee coffee;
+
+	public MilkCoffee(Coffee coffee) {
+		this.coffee = coffee;
+	}
+
+	@Override
+	public int cost () {
+		return coffee.cost() + 10;
+	}
+}
+
+Coffee coffee = Coffee(5);
+int finalCost = MilkCoffee(coffee).cost() ---> #DECORATOR PATTERN#
+
