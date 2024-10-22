@@ -1,0 +1,27 @@
+Day #26 - Factory Pattern and Abstract Factory:
+
+One of the most used patterns in practical LLD. The basic stucture includes:-
+1) An interface class lets say BankAccount
+2) Classes implementing the interface class. lets call them SavingAccount and CurrentAccount
+
+Now BankAccount will have its methods and the implementing class will have the implementations/definition of those methods:-
+
+Now there will be a factory class, BankAccountFactory, which depending upon business/logical condition would call the sub-classes.
+
+public class BankAccountFactory {
+    public BankAccount createAccount(String type){
+        BankAccount bankAccount = null;
+        if (type.equals("S")){
+            bankAccount = new SavingAccount();
+        } else{
+            bankAccount = new CurrentAccount(); 
+         }
+         return bankAccount;
+     }
+ }
+
+ here, we will create the instance of SavingAccount, if the type of bankAccount is "S". This is factory pattern. This enables us to club everything together to write clean, concise and scalable code.
+
+ Abstract factory is nothing but factory of factories, so if you add another layer of factories on top of this, It becomes abstract factory. The purpose is to create a top level logic bifurcating into smaller logic.
+
+ Reference taken from this article, its a good read - https://prasadct.medium.com/factory-method-design-patternfactory-method-design-pattern-with-real-world-example-4ee909a24ab6

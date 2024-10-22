@@ -1,0 +1,34 @@
+Day #27 - Singleton Pattern:
+
+Whenever we want a single instance of a class to be created in the whole application, we use singleton pattern. Example a logger class.
+
+Steps to create singleton pattern:-
+
+1) The constructor should be made private. Very logical, since we want only 1 instance, we should not allow object creation.
+
+2) keep a static method to instantiate the class for the very first time. Why static and not just public? Because There wont be any instance of the object and thus we will not be able to call the normal public method, static methods gets booted at the creation of class itself and accessed globally.
+
+3) invoke the instance of the class on the method above, if not created else just access it.
+
+Implementation:-
+
+public class Logger {
+    private static Logger instance; ----> static object
+
+    private Logger() {  ----> constructor is private
+        // Initialization code, if needed
+    }
+
+    // Static method to get the instance 
+    public static Logger getInstance() { ------> static method
+        if (instance == null) {
+            instance = new Logger(); -----> first instance creation
+        }
+        return instance;
+    }
+}
+
+Logger logger = Singleton.getInstance();
+//Now use as it is.
+
+Reference - https://medium.com/@thecodebean/singleton-design-pattern-implementation-in-java-1fba4ecc959f
